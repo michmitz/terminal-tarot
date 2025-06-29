@@ -19,11 +19,23 @@ function getDeck() {
 }
 
 function drawCards(deck, num, allowReversals) {
-  const shuffled = [...deck].sort(() => Math.random() - 0.5);
-  const drawn = shuffled.slice(0, num);
-  return drawn.map((card) =>
-    allowReversals && Math.random() < 0.5 ? `${card} (Reversed)` : card
-  );
+  let finalDeck;
+
+  if (allowReversals) {
+    const reversalCount = Math.floor(Math.random() * deck.length);
+    const indices = [...Array(deck.length).keys()]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, reversalCount);
+
+    finalDeck = deck.map((card, i) =>
+      indices.includes(i) ? `${card} (Reversed)` : card
+    );
+  } else {
+    finalDeck = [...deck];
+  }
+
+  const shuffled = [...finalDeck].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, num);
 }
 
 async function displayCardImage(cardName) {
@@ -66,8 +78,6 @@ async function displayCardImage(cardName) {
           // Force terminal buffer flush to prevent display artifacts
           process.stdout.write(""); // Force flush
           await new Promise((resolve) => setTimeout(resolve, 100));
-
-         
 
           if (isReversed) {
             console.log(chalk.yellow("Pretend the image above is reversed"));
@@ -148,7 +158,6 @@ async function runTarotApp() {
         for (let i = 0; i < cards.length; i++) {
           console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
           await displayCardImage(cards[i]);
-
 
           if (i < cards.length - 1) {
             await new Promise((resolve) => setTimeout(resolve, 500));
