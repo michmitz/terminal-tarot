@@ -9,9 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bin": {
     "tarot": "./tarot.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "terminal-image": "^3.1.1"
   }
 }
-
