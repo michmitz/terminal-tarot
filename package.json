@@ -1,15 +1,16 @@
 {
-  "name": "tarot",
+  "name": "terminal-tarot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Command line tarot spreads with card images",
   "main": "tarot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
+  "preferGlobal": true, 
+  "author": "Michelle Stermitz",
   "bin": {
     "tarot": "./tarot.js"
   },

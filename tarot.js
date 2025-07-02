@@ -40,7 +40,6 @@ function drawCards(deck, num, allowReversals) {
 
 async function displayCardImage(cardName) {
   try {
-    // Remove "(Reversed)" from card name for image lookup
     const baseCardName = cardName.replace(" (Reversed)", "");
     const isReversed = cardName.includes(" (Reversed)");
     const imageFile = cardToImage[baseCardName];
@@ -50,25 +49,27 @@ async function displayCardImage(cardName) {
 
       if (fs.existsSync(imagePath)) {
         try {
+          const isIterm = process.env.TERM_PROGRAM === "iTerm.app";
+
           let image;
           try {
-            image = await terminalImage.file(imagePath, {
-              width: 50, // Larger width for better resolution
-              height: 20, // Larger height for better resolution
-              preserveAspectRatio: true,
-            });
-
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            if (isIterm) {
+              image = await terminalImage.file(imagePath, {
+                width: "20ch",
+                height: "13ch",
+                preserveAspectRatio: true,
+              });
+            } else {
+              image = await terminalImage.file(imagePath, {
+                height: 13,
+              });
+            }
           } catch (displayError) {
             console.log(
               chalk.yellow(
                 `Primary display failed for ${imageFile}, trying fallback...`
               )
             );
-            image = await terminalImage.file(imagePath, {
-              width: 40,
-              height: 15,
-            });
 
             await new Promise((resolve) => setTimeout(resolve, 100));
           }
