@@ -9,13 +9,15 @@
   "keywords": [],
   "license": "MIT",
   "type": "module",
-  "preferGlobal": true, 
+  "preferGlobal": true,
   "author": "Michelle Stermitz",
   "bin": {
     "tarot": "./tarot.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
+    "inquirer": "^12.7.0",
+    "jimp": "^1.6.0",
     "terminal-image": "^3.1.1"
   }
 }
