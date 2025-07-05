@@ -4,7 +4,7 @@ import terminalImage from "terminal-image";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import fs from "fs";
-import readline from "readline";
+import inquirer from "inquirer";
 import { majorArcana, suits, cardToImage } from "./data/cardData.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +22,8 @@ function drawCards(deck, num, allowReversals) {
   let finalDeck;
 
   if (allowReversals) {
-    const reversalCount = Math.floor(Math.random() * deck.length);
+    const reversalCount = Math.floor((deck.length / 2) * Math.random());
+    console.log("reversalCount", reversalCount);
     const indices = [...Array(deck.length).keys()]
       .sort(() => Math.random() - 0.5)
       .slice(0, reversalCount);
@@ -35,6 +36,7 @@ function drawCards(deck, num, allowReversals) {
   }
 
   const shuffled = [...finalDeck].sort(() => Math.random() - 0.5);
+  console.log("shuffled", shuffled);
   return shuffled.slice(0, num);
 }
 
@@ -79,10 +81,6 @@ async function displayCardImage(cardName) {
           // Force terminal buffer flush to prevent display artifacts
           process.stdout.write(""); // Force flush
           await new Promise((resolve) => setTimeout(resolve, 100));
-
-          if (isReversed) {
-            console.log(chalk.yellow("Pretend the image above is reversed"));
-          }
         } catch (imgError) {
           console.log(
             chalk.red(
@@ -119,16 +117,22 @@ async function displayCardImage(cardName) {
 async function runTarotApp() {
   console.log(chalk.green("🔮 Tarot Card Spreads 🔮\n"));
 
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+  try {
+    // Spread selection
+    const spreadAnswer = await inquirer.prompt([
+      {
+        type: "list",
+        name: "spreadType",
+        message: "Choose a spread:",
+        choices: [
+          { name: "Single Card", value: "single" },
+          { name: "Three Card Spread", value: "three" },
+          { name: "Five Card Spread", value: "five" },
+          { name: "Celtic Cross (Ten Cards)", value: "ten" },
+        ],
+      },
+    ]);
 
-  console.log(
-    chalk.cyan("Choose a spread: single, three, five, or ten (celtic cross): ")
-  );
-
-  rl.question("", (spreadType) => {
     const spreadSizes = {
       single: 1,
       three: 3,
@@ -136,36 +140,48 @@ async function runTarotApp() {
       ten: 10,
     };
 
-    const spreadSize = spreadSizes[spreadType.toLowerCase()];
-    if (!spreadSize) {
-      console.log("Invalid spread type.");
-      rl.close();
-      return;
-    }
+    const spreadSize = spreadSizes[spreadAnswer.spreadType];
 
-    console.log(chalk.cyan("Allow reversals? (yes/no): "));
-    rl.question("", (reversalsInput) => {
-      console.log(chalk.cyan("What question would you like to ask?: "));
-      rl.question("", async (tarotPrompt) => {
-        const allowReversals = reversalsInput.toLowerCase() === "yes";
+    // Reversals selection
+    const reversalsAnswer = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "allowReversals",
+        message: "Allow reversals?",
+        default: true,
+      },
+    ]);
 
-        const deck = getDeck();
-        const cards = drawCards(deck, spreadSize, allowReversals);
-
-        console.log(`\nYour cards for the question: ${tarotPrompt}`);
-        for (let i = 0; i < cards.length; i++) {
-          console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
-          await displayCardImage(cards[i]);
-
-          if (i < cards.length - 1) {
-            await new Promise((resolve) => setTimeout(resolve, 500));
+    // Question input
+    const questionAnswer = await inquirer.prompt([
+      {
+        type: "input",
+        name: "tarotPrompt",
+        message: "What question would you like to ask?",
+        validate: (input) => {
+          if (input.trim().length === 0) {
+            return "Please enter a question.";
           }
-        }
+          return true;
+        },
+      },
+    ]);
 
-        rl.close();
-      });
-    });
-  });
+    const deck = getDeck();
+    const cards = drawCards(deck, spreadSize, reversalsAnswer.allowReversals);
+
+    console.log(`\nYour cards for the question: ${questionAnswer.tarotPrompt}`);
+    for (let i = 0; i < cards.length; i++) {
+      console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
+      await displayCardImage(cards[i]);
+
+      if (i < cards.length - 1) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+    }
+  } catch (error) {
+    console.log(chalk.red(`Error: ${error.message}`));
+  }
 }
 
 runTarotApp();
