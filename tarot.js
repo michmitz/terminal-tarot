@@ -23,7 +23,6 @@ function drawCards(deck, num, allowReversals) {
 
   if (allowReversals) {
     const reversalCount = Math.floor((deck.length / 2) * Math.random());
-    console.log("reversalCount", reversalCount);
     const indices = [...Array(deck.length).keys()]
       .sort(() => Math.random() - 0.5)
       .slice(0, reversalCount);
@@ -36,7 +35,6 @@ function drawCards(deck, num, allowReversals) {
   }
 
   const shuffled = [...finalDeck].sort(() => Math.random() - 0.5);
-  console.log("shuffled", shuffled);
   return shuffled.slice(0, num);
 }
 
