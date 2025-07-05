@@ -2,6 +2,7 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { getDeck, drawCards, displayCardImage } from "./utils.js";
+import { celticCrossPositions } from "./cardData.js";
 
 async function runTarotApp() {
   console.log(chalk.green("🔮 Tarot Card Spreads 🔮\n"));
@@ -58,7 +59,13 @@ async function runTarotApp() {
 
     console.log(`\nYour cards for the question: ${questionAnswer.tarotPrompt}`);
     for (let i = 0; i < cards.length; i++) {
-      console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
+      if (spreadAnswer.spreadType === "ten") {
+        console.log(chalk.cyan(`\n${celticCrossPositions[i]}`));
+        console.log(chalk.white(`${cards[i]}`));
+      } else {
+        console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
+      }
+
       await displayCardImage(cards[i]);
 
       if (i < cards.length - 1) {

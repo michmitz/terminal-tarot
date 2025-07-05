@@ -1,4 +1,4 @@
-import { majorArcana, suits, cardToImage } from "./data/cardData.js";
+import { majorArcana, suits, cardToImage } from "./cardData.js";
 import { dirname, join } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
