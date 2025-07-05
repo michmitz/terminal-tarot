@@ -90,17 +90,15 @@ async function displayCardImage(cardName) {
             )
           );
           const cardDisplay = `
-┌─────────────────┐
-|                 |
-|                 |
-|                 |
-|                 |
-|                 |
-│                 │
-│                 │
-│                 │
-│                 │
-└─────────────────┘`;
+┌─────────────┐
+|             |
+|             |
+|             |
+│             │
+│             │
+│             │
+│             │
+└─────────────┘`;
 
           console.log(cardDisplay);
           if (isReversed) {
@@ -131,30 +129,29 @@ async function runTarotApp() {
   );
 
   rl.question("", (spreadType) => {
+    const spreadSizes = {
+      single: 1,
+      three: 3,
+      five: 5,
+      ten: 10,
+    };
+
+    const spreadSize = spreadSizes[spreadType.toLowerCase()];
+    if (!spreadSize) {
+      console.log("Invalid spread type.");
+      rl.close();
+      return;
+    }
+
     console.log(chalk.cyan("Allow reversals? (yes/no): "));
     rl.question("", (reversalsInput) => {
       console.log(chalk.cyan("What question would you like to ask?: "));
       rl.question("", async (tarotPrompt) => {
         const allowReversals = reversalsInput.toLowerCase() === "yes";
 
-        const spreadSizes = {
-          single: 1,
-          three: 3,
-          five: 5,
-          ten: 10,
-        };
-
-        const spreadSize = spreadSizes[spreadType.toLowerCase()];
-        if (!spreadSize) {
-          console.log("Invalid spread type.");
-          rl.close();
-          return;
-        }
-
         const deck = getDeck();
         const cards = drawCards(deck, spreadSize, allowReversals);
 
-        console.log(`${tarotPrompt}`);
         console.log(`\nYour cards for the question: ${tarotPrompt}`);
         for (let i = 0; i < cards.length; i++) {
           console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
