@@ -42,8 +42,8 @@ export function drawCards(num) {
 export async function getTerminalImageOptions(isIterm) {
   return isIterm
     ? {
-        width: "20ch",
-        height: "13ch",
+        width: "14.5ch",
+        height: "10ch",
         preserveAspectRatio: true,
       }
     : {
