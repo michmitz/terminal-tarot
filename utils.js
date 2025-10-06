@@ -16,9 +16,27 @@ export function getDeck() {
   return deck;
 }
 
-export function drawCards(deck, num) {
-  const shuffled = deck.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, num);
+export const shuffleDeck = (deck) => {
+  const shuffled = [...deck];
+  let currentIndex = shuffled.length;
+
+  while (currentIndex !== 0) {
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [shuffled[currentIndex], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[currentIndex],
+    ];
+  }
+
+  return shuffled;
+};
+
+const shuffledDeck = shuffleDeck(getDeck());
+
+export function drawCards(num) {
+  return shuffledDeck.slice(0, num);
 }
 
 export async function getTerminalImageOptions(isIterm) {
