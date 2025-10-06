@@ -2,10 +2,10 @@
 import chalk from "chalk";
 import inquirer from "inquirer";
 import { getDeck, drawCards, displayCardImage } from "./utils.js";
-import { celticCrossPositions } from "./cardData.js";
+import { celticCrossPositions, threeCardPositions } from "./cardData.js";
 
 async function runTarotApp() {
-  console.log(chalk.green("🔮 Tarot Card Spreads 🔮\n"));
+  console.log(chalk.cyan("🔮 Tarot Spreads 🔮\n"));
 
   try {
     const spreadAnswer = await inquirer.prompt([
@@ -15,7 +15,7 @@ async function runTarotApp() {
         message: "Choose a spread:",
         choices: [
           { name: "Single Card", value: "single" },
-          { name: "Three Card Spread", value: "three" },
+          { name: "Past, Present, Future", value: "three" },
           { name: "Five Card Spread", value: "five" },
           { name: "Celtic Cross (Ten Cards)", value: "ten" },
         ],
@@ -30,15 +30,6 @@ async function runTarotApp() {
     };
 
     const spreadSize = spreadSizes[spreadAnswer.spreadType];
-
-    const reversalsAnswer = await inquirer.prompt([
-      {
-        type: "confirm",
-        name: "allowReversals",
-        message: "Allow reversals?",
-        default: true,
-      },
-    ]);
 
     const questionAnswer = await inquirer.prompt([
       {
@@ -55,15 +46,18 @@ async function runTarotApp() {
     ]);
 
     const deck = getDeck();
-    const cards = drawCards(deck, spreadSize, reversalsAnswer.allowReversals);
+    const cards = drawCards(deck, spreadSize);
 
     console.log(`\nYour cards for the question: ${questionAnswer.tarotPrompt}`);
     for (let i = 0; i < cards.length; i++) {
       if (spreadAnswer.spreadType === "ten") {
-        console.log(chalk.cyan(`\n${celticCrossPositions[i]}`));
-        console.log(chalk.white(`${cards[i]}`));
+        console.log(chalk.cyan(`\n${celticCrossPositions[i]} - ${cards[i]}\n`));
+      } else if (spreadAnswer.spreadType === "three") {
+        console.log(chalk.cyan(`\n${threeCardPositions[i]} - ${cards[i]}\n`));
+      } else if (spreadAnswer.spreadType === "five") {
+        console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}\n`));
       } else {
-        console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}`));
+        console.log(chalk.cyan(`\n${cards[i]}\n`));
       }
 
       await displayCardImage(cards[i]);
