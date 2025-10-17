@@ -6,6 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "tarot.js",
+    "utils.js",
+    "cardData.js",
+    "card-images/",
+    "screenshots/",
+    "README.md"
+  ],
   "keywords": [],
   "license": "MIT",
   "type": "module",
@@ -17,7 +25,6 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "inquirer": "^12.7.0",
-    "jimp": "^1.6.0",
     "terminal-image": "^3.1.1"
   }
 }
