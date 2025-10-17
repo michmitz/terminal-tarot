@@ -54,7 +54,7 @@ export function supportsInlineImages() {
 
 export async function getTerminalImageOptions(isInlineCapable) {
   if (!isInlineCapable) {
-    return { height: 30 };
+    return { height: 16 };
   }
 
   return {
