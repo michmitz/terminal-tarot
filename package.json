@@ -1,6 +1,6 @@
 {
   "name": "terminal-tarot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line tarot spreads with card images",
   "main": "tarot.js",
   "scripts": {
