@@ -14,7 +14,18 @@
     "screenshots/",
     "README.md"
   ],
-  "keywords": [],
+  "keywords": [
+  "tarot",
+  "tarot-cards",
+  "cli",
+  "fortune",
+  "divination",
+  "rider-waite",
+  "terminal",
+  "spiritual",
+  "tarot-reader",
+  "oracle"
+  ],
   "license": "MIT",
   "type": "module",
   "preferGlobal": true,
