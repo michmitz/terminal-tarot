@@ -1,6 +1,6 @@
 {
   "name": "terminal-tarot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Command line tarot spreads with card images",
   "main": "tarot.js",
   "scripts": {
@@ -15,16 +15,16 @@
     "README.md"
   ],
   "keywords": [
-  "tarot",
-  "tarot-cards",
-  "cli",
-  "fortune",
-  "divination",
-  "rider-waite",
-  "terminal",
-  "spiritual",
-  "tarot-reader",
-  "oracle"
+    "tarot",
+    "tarot-cards",
+    "cli",
+    "fortune",
+    "divination",
+    "rider-waite",
+    "terminal",
+    "spiritual",
+    "tarot-reader",
+    "oracle"
   ],
   "license": "MIT",
   "type": "module",
