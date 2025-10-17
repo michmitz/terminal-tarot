@@ -17,7 +17,7 @@ Command-line tarot spreads with card images. For full-resolution images, use iTe
 ## 🚀 Installation
 
 
-`npm install -g CLI-tarot-spreads`
+`npm install -g terminal-tarot`
 
 ## Usage
 
