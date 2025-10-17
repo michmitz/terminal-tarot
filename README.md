@@ -16,7 +16,6 @@ Command-line tarot spreads with card images. For full-resolution images, use iTe
 
 ## 🚀 Installation
 
-
 `npm install -g terminal-tarot`
 
 ## Usage
@@ -28,5 +27,7 @@ Run the command `tarot` to get started.
 ![iTerm](https://github.com/michmitz/terminal-tarot/blob/fcc93069a31776b408e6de7be3bc4454015ca56f/screenshots/three-card.png)
 
 
+### Repo
+[GitHub Repo](https://github.com/michmitz/terminal-tarot)
 
 
