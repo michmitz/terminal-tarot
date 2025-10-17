@@ -45,8 +45,7 @@ async function runTarotApp() {
       },
     ]);
 
-    const deck = getDeck();
-    const cards = drawCards(deck, spreadSize);
+    const cards = drawCards(spreadSize);
 
     console.log(`\nYour cards for the question: ${questionAnswer.tarotPrompt}`);
     for (let i = 0; i < cards.length; i++) {

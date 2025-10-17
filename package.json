@@ -1,5 +1,5 @@
 {
-  "name": "terminal-tarot",
+  "name": "CLI-tarot-spreads",
   "version": "1.0.0",
   "description": "Command line tarot spreads with card images",
   "main": "tarot.js",

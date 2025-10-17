@@ -16,21 +16,52 @@ export function getDeck() {
   return deck;
 }
 
-export function drawCards(deck, num) {
-  const shuffled = deck.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, num);
+export const shuffleDeck = (deck) => {
+  const shuffled = [...deck];
+  let currentIndex = shuffled.length;
+
+  while (currentIndex !== 0) {
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [shuffled[currentIndex], shuffled[randomIndex]] = [
+      shuffled[randomIndex],
+      shuffled[currentIndex],
+    ];
+  }
+
+  return shuffled;
+};
+
+const shuffledDeck = shuffleDeck(getDeck());
+
+export function drawCards(num) {
+  return shuffledDeck.slice(0, num);
 }
 
-export async function getTerminalImageOptions(isIterm) {
-  return isIterm
-    ? {
-        width: "20ch",
-        height: "13ch",
-        preserveAspectRatio: true,
-      }
-    : {
-        height: 13,
-      };
+export function supportsInlineImages() {
+  const termProgram = process.env.TERM_PROGRAM || "";
+  const term = process.env.TERM || "";
+
+  return (
+    termProgram.includes("iTerm") ||
+    termProgram.includes("WezTerm") ||
+    term.toLowerCase().includes("kitty") ||
+    term.toLowerCase().includes("sixel") ||
+    process.env.KITTY_WINDOW_ID !== undefined
+  );
+}
+
+export async function getTerminalImageOptions(isInlineCapable) {
+  if (!isInlineCapable) {
+    return { height: 16 };
+  }
+
+  return {
+    width: "",
+    height: "",
+    preserveAspectRatio: true,
+  };
 }
 
 export async function displayCardImage(cardName) {
@@ -38,7 +69,7 @@ export async function displayCardImage(cardName) {
     const imageFile = cardToImage[cardName];
 
     if (!imageFile) {
-      console.log(chalk.red(`(no image mapping found)`));
+      console.log(chalk.red(`(no image found)`));
       return;
     }
 
@@ -50,15 +81,14 @@ export async function displayCardImage(cardName) {
     }
 
     try {
-      const isIterm = process.env.TERM_PROGRAM === "iTerm.app";
-      const options = await getTerminalImageOptions(isIterm);
+      const isInlineCapable = supportsInlineImages();
+      const options = await getTerminalImageOptions(isInlineCapable);
       let imagePathToDisplay = imagePath;
 
       try {
         const image = await terminalImage.file(imagePathToDisplay, options);
         console.log(image);
 
-        // Force terminal buffer flush to prevent display artifacts
         process.stdout.write("");
         await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (displayError) {
@@ -75,19 +105,6 @@ export async function displayCardImage(cardName) {
           `Image processing error for ${imageFile}: ${imgError.message}`
         )
       );
-
-      const cardDisplay = `
-┌─────────────┐
-|             |
-|             |
-|             |
-│             │
-│             │
-│             │
-│             │
-└─────────────┘`;
-
-      console.log(cardDisplay);
     }
   } catch (error) {
     console.log(chalk.red(`(error displaying image: ${error.message})`));
