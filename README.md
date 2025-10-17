@@ -25,7 +25,7 @@ Run the command `tarot` to get started.
 
 ## Examples
 
-![iTerm](./screenshots/three-card.png)
+![iTerm](https://github.com/michmitz/terminal-tarot/blob/fcc93069a31776b408e6de7be3bc4454015ca56f/screenshots/three-card.png)
 
 
 
