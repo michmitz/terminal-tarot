@@ -10,6 +10,7 @@
     "tarot.js",
     "utils.js",
     "cardData.js",
+    "cardMeanings.js",
     "card-images/",
     "screenshots/",
     "README.md"

@@ -3,6 +3,7 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import { getDeck, drawCards, displayCardImage } from "./utils.js";
 import { celticCrossPositions, threeCardPositions } from "./cardData.js";
+import { getCardMeaning } from "./cardMeanings.js";
 
 async function runTarotApp() {
   console.log(chalk.cyan("🔮 Tarot Spreads 🔮\n"));
@@ -60,6 +61,12 @@ async function runTarotApp() {
       }
 
       await displayCardImage(cards[i]);
+
+      const meaning = getCardMeaning(cards[i]);
+      if (meaning) {
+        console.log(chalk.magenta(`Keywords: ${meaning.keywords.join(", ")}`));
+        console.log(meaning.meaning);
+      }
 
       if (i < cards.length - 1) {
         await new Promise((resolve) => setTimeout(resolve, 500));

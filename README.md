@@ -1,6 +1,8 @@
 # Command Line Tarot Spreads
 
-Command-line tarot spreads with card images. For full-resolution images, use iTerm or another terminal that supports inline images.
+Command-line tarot spreads with card images and meanings. For full-resolution images, use iTerm or another terminal that supports inline images.
+
+Card meanings based on A.E. Waite's Pictorial Key to the Tarot, 1910, public domain
 
 ---
 
