@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { getDeck, drawCards, displayCardImage } from "./utils.js";
-import { celticCrossPositions, threeCardPositions } from "./cardData.js";
+import { drawCards, displayCardImage } from "./utils.js";
+import { celticCrossPositions, threeCardPositions, fiveCardPositions } from "./cardData.js";
 import { getCardMeaning } from "./cardMeanings.js";
 
 async function runTarotApp() {
@@ -16,9 +16,9 @@ async function runTarotApp() {
         message: "Choose a spread:",
         choices: [
           { name: "Single Card", value: "single" },
-          { name: "Past, Present, Future", value: "three" },
-          { name: "Five Card Spread", value: "five" },
-          { name: "Celtic Cross (Ten Cards)", value: "ten" },
+          { name: "Three Cards: Past, Present, Future", value: "three" },
+          { name: "Five Cards: Situation, Past, Future, Root Cause, Potential Outcome", value: "five" },
+          { name: "Ten Cards: Celtic Cross", value: "ten" },
         ],
       },
     ]);
@@ -55,7 +55,7 @@ async function runTarotApp() {
       } else if (spreadAnswer.spreadType === "three") {
         console.log(chalk.cyan(`\n${threeCardPositions[i]} - ${cards[i]}\n`));
       } else if (spreadAnswer.spreadType === "five") {
-        console.log(chalk.cyan(`\n${i + 1}. ${cards[i]}\n`));
+        console.log(chalk.cyan(`\n${fiveCardPositions[i]} - ${cards[i]}\n`));
       } else {
         console.log(chalk.cyan(`\n${cards[i]}\n`));
       }

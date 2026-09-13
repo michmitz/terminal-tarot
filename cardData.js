@@ -146,3 +146,5 @@ export const celticCrossPositions = [
 ];
 
 export const threeCardPositions = ["1. Past", "2. Present", "3. Future"];
+
+export const fiveCardPositions = ["1. Situation", "2. Past Influences", "3. Future", "4. Root Cause", "5. Potential Outcome"];
