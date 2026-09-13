@@ -1,6 +1,6 @@
 {
   "name": "terminal-tarot",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Command line tarot spreads with card images",
   "main": "tarot.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "tarot.js",
     "utils.js",
     "cardData.js",
+    "cardMeanings.js",
     "card-images/",
     "screenshots/",
     "README.md"
@@ -36,7 +37,8 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "inquirer": "^12.7.0",
-    "terminal-image": "^3.1.1"
+    "terminal-image": "^3.1.1",
+    "update-notifier": "^7.3.1"
   },
   "repository": {
     "type": "git",
