@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 import chalk from "chalk";
 import inquirer from "inquirer";
+import updateNotifier from "update-notifier";
+import { readFileSync } from "fs";
 import { drawCards, displayCardImage } from "./utils.js";
 import { celticCrossPositions, threeCardPositions, fiveCardPositions } from "./cardData.js";
 import { getCardMeaning } from "./cardMeanings.js";
+
+const pkg = JSON.parse(readFileSync(new URL("./package.json", import.meta.url)));
+updateNotifier({ pkg }).notify();
 
 async function runTarotApp() {
   console.log(chalk.cyan("🔮 Tarot Spreads 🔮\n"));
